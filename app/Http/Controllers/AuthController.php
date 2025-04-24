@@ -49,7 +49,7 @@ class AuthController extends Controller
     public function refresh()
     {
         try {
-            $token = auth()->refresh();
+            $token = Auth::refresh();
 
             return ApiResponse::success([
                 'token' => $token,
