@@ -20,8 +20,10 @@ class CustomerController extends Controller
         try {
             $this->customerService->registerCustomer($validatedData);
 
-            return ApiResponse::success([
-            ], 'Customer registered successfully.');
+            return ApiResponse::success(
+                null,
+                'Customer registered successfully.'
+            );
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }

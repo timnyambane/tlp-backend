@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WorkCategoryController;
 use App\Models\WorkCategory;
@@ -34,4 +35,6 @@ Route::middleware('auth:api')->group(function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh-token', [AuthController::class, 'refresh']);
+
+    Route::apiResource('/job-posts', JobPostController::class);
 });

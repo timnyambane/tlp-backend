@@ -15,4 +15,9 @@ class Customer extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function job_posts()
+    {
+        return $this->hasMany(JobPost::class);
+    }
 }

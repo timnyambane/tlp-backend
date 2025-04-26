@@ -5,17 +5,10 @@ use App\Models\Service;
 use App\Models\User;
 use App\Models\Business;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use App\Helpers\ApiResponse;
 
 class BusinessService
 {
-    protected $apiResponse;
-
-    public function __construct(ApiResponse $apiResponse)
-    {
-        $this->apiResponse = $apiResponse;
-    }
 
     public function registerBusiness($validatedData)
     {
@@ -45,7 +38,7 @@ class BusinessService
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => bcrypt($data['password']),
             'role' => config('constants.roles.business'),
         ]);
     }

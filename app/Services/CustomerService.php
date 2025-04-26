@@ -2,18 +2,11 @@
 
 namespace App\Services;
 
-use App\Helpers\ApiResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class CustomerService
 {
-    protected $apiResponse;
-
-    public function __construct(ApiResponse $apiResponse)
-    {
-        $this->apiResponse = $apiResponse;
-    }
 
     public function registerCustomer($validatedData)
     {
