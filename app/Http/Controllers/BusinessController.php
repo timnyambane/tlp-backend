@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ApiResponse;
 use App\Http\Requests\RegisterBusinessRequest;
 use App\Services\BusinessService;
+use Illuminate\Http\JsonResponse;
 
 class BusinessController extends Controller
 {
@@ -15,7 +16,7 @@ class BusinessController extends Controller
         $this->businessService = $businessService;
     }
 
-    public function register(RegisterBusinessRequest $request)
+    public function register(RegisterBusinessRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
 

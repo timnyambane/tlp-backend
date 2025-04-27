@@ -6,7 +6,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\WorkCategoryController;
-use App\Models\WorkCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

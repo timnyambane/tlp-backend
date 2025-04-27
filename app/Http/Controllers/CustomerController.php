@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ApiResponse;
 use App\Http\Requests\RegisterCustomerRequest;
 use App\Services\CustomerService;
+use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,7 @@ class CustomerController extends Controller
     {
         $this->customerService = $customerService;
     }
-    public function register(RegisterCustomerRequest $request)
+    public function register(RegisterCustomerRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
         try {
@@ -29,5 +30,4 @@ class CustomerController extends Controller
         }
 
     }
-
 }

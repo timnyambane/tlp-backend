@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
@@ -33,7 +34,7 @@ class AuthController extends Controller
         ], 'Login successful');
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         try {
             Auth::logout();
@@ -46,7 +47,7 @@ class AuthController extends Controller
         }
     }
 
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         try {
             $token = Auth::refresh();

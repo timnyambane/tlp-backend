@@ -6,6 +6,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Requests\JobPostRequest;
 use App\Models\JobPost;
 use App\Services\JobPostService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class JobPostController extends Controller
@@ -18,21 +19,28 @@ class JobPostController extends Controller
         $this->jobPostsService = $jobPostsService;
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $user = Auth::user();
 
-        $user = Auth::user();
         if (!$user->customer || $user->customer->id !== $user->customer->id) {
             return ApiResponse::unauthorized('You are not authorized to view this job post.');
         }
 
-        $jobPosts = $this->jobPostsService->indexJobs($user->customer);
+        $status = request()->query('status');
+        if (!$status) {
+            return ApiResponse::error('Status parameter is required.');
+        }
 
-        return ApiResponse::success($jobPosts, 'Job posts retrieved successfully.');
+        try {
+            $jobPosts = $this->jobPostsService->indexJobs($user->customer, $status);
+            return ApiResponse::success($jobPosts, 'Job posts retrieved successfully.');
+        } catch (\Exception $e) {
+            return ApiResponse::error($e->getMessage());
+        }
     }
 
-    public function store(JobPostRequest $request)
+    public function store(JobPostRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
 
@@ -50,7 +58,7 @@ class JobPostController extends Controller
         }
     }
 
-    public function show(JobPost $jobPost)
+    public function show(JobPost $jobPost): JsonResponse
     {
         $user = Auth::user();
         if ($user->customer->id !== $jobPost->customer_id) {
@@ -60,7 +68,7 @@ class JobPostController extends Controller
         return ApiResponse::success($jobPost, 'Job post retrieved successfully.');
     }
 
-    public function update(JobPostRequest $request, JobPost $jobPost)
+    public function update(JobPostRequest $request, JobPost $jobPost): JsonResponse
     {
         $user = Auth::user();
         if (!$user->customer || $user->customer->id !== $jobPost->customer_id) {
@@ -74,7 +82,7 @@ class JobPostController extends Controller
         return ApiResponse::success(null, 'Job post updated successfully.');
     }
 
-    public function destroy(JobPost $jobPost)
+    public function destroy(JobPost $jobPost): JsonResponse
     {
         $user = Auth::user();
         if (!$user->customer || $user->customer->id !== $jobPost->customer_id) {

@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\WorkCategory;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
 class WorkCategoryController extends Controller
@@ -14,7 +15,7 @@ class WorkCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         try {
             $workCategories = WorkCategory::with('services')->get();
@@ -27,7 +28,7 @@ class WorkCategoryController extends Controller
     /**
      * Store a newly created category in storage.
      */
-    public function storeCategory(Request $request)
+    public function storeCategory(Request $request): JsonResponse
     {
         try {
             $creds = Validator::make($request->all(), [
@@ -47,7 +48,7 @@ class WorkCategoryController extends Controller
     /**
      * Store a newly created service in storage.
      */
-    public function storeService(Request $request)
+    public function storeService(Request $request): JsonResponse
     {
         try {
             $creds = Validator::make($request->all(), [
@@ -78,7 +79,7 @@ class WorkCategoryController extends Controller
     /**
      * Search for categories based on query parameters.
      */
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         try {
             $query = WorkCategory::with('services');
@@ -102,7 +103,7 @@ class WorkCategoryController extends Controller
     /**
      * Update the specified category in storage.
      */
-    public function updateCategory(Request $request, $id)
+    public function updateCategory(Request $request, $id): JsonResponse
     {
         $creds = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:work_categories,name,' . $id,
@@ -132,7 +133,7 @@ class WorkCategoryController extends Controller
     /**
      * Update a service inside a category.
      */
-    public function updateService(Request $request, $serviceId)
+    public function updateService(Request $request, $serviceId): JsonResponse
     {
         $creds = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -160,7 +161,7 @@ class WorkCategoryController extends Controller
     /**
      * Remove the specified category from storage.
      */
-    public function destroyCategory($id)
+    public function destroyCategory($id): JsonResponse
     {
         try {
             $workCategory = WorkCategory::find($id);
@@ -185,7 +186,7 @@ class WorkCategoryController extends Controller
     /**
      * Remove the specified service from storage.
      */
-    public function destroyService($serviceId)
+    public function destroyService($serviceId): JsonResponse
     {
         try {
             $service = Service::find($serviceId);
