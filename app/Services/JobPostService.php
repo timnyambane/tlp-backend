@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\JobPostCreated;
 use App\Models\JobPost;
 use App\Models\Customer;
 use App\Models\User;
@@ -64,7 +65,10 @@ class JobPostService
         ];
 
         try {
-            return $user->customer->job_posts()->create($data);
+            $jobPost = $user->customer->job_posts()->create($data);
+            event(new JobPostCreated($jobPost));
+
+            return $jobPost;
         } catch (Throwable $e) {
             throw new Exception('Failed to create job post.' . $e->getMessage());
         }

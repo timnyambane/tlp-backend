@@ -9,7 +9,6 @@ use App\Http\Controllers\WorkCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/locations', [LocationController::class, 'index']);
 Route::prefix('categories')->group(function () {
     Route::get('/', [WorkCategoryController::class, 'index']);

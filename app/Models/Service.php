@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Service extends Model
 {
@@ -23,12 +25,12 @@ class Service extends Model
         'work_category_id',
     ];
 
-    public function workCategory()
+    public function workCategory(): BelongsTo
     {
         return $this->belongsTo(WorkCategory::class);
     }
 
-    public function businesses()
+    public function businesses(): BelongsToMany
     {
         return $this->belongsToMany(Business::class);
     }
