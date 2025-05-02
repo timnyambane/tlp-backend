@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Service;
 use App\Models\WorkCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class WorkCategorySeeder extends Seeder

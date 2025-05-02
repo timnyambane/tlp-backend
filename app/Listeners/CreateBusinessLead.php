@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\JobPostCreated;
 use App\Models\Lead;
-use Illuminate\Support\Facades\Log;
 
 class CreateBusinessLead
 {
@@ -24,9 +23,6 @@ class CreateBusinessLead
         $jobPost = $event->jobPost;
         Lead::create([
             'job_post_id' => $jobPost->id,
-            'business_id' => null,
-            'quote' => null,
-            'hired_date' => null,
         ]);
     }
 }

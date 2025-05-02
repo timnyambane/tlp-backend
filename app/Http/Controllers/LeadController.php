@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class LeadController extends Controller
      */
     public function index()
     {
-        //
+        $leads = Lead::with('jobPost')->get();
+
+        return ApiResponse::success($leads, 'Leads retrieved successfully');
     }
 
     /**

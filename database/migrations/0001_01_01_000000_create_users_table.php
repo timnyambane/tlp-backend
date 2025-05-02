@@ -18,7 +18,16 @@ return new class extends Migration {
             $table->string('password');
             $table->enum('role', config('constants.roles'))->default(config('constants.roles.customer'));
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('active')->default(true);
             $table->rememberToken();
+            $table->timestamps();
+        });
+
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('phone')->unique();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
 

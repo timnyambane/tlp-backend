@@ -23,10 +23,6 @@ class JobPostController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->customer || $user->customer->id !== $user->customer->id) {
-            return ApiResponse::unauthorized('You are not authorized to view this job post.');
-        }
-
         $status = request()->query('status');
         if (!$status) {
             return ApiResponse::error('Status parameter is required.');
@@ -45,10 +41,6 @@ class JobPostController extends Controller
         $validatedData = $request->validated();
 
         $user = Auth::user();
-        if (!$user->customer) {
-            return ApiResponse::unauthorized('Not a customer');
-        }
-
 
         try {
             $this->jobPostsService->createJobPost($user, $validatedData);
@@ -60,21 +52,11 @@ class JobPostController extends Controller
 
     public function show(JobPost $jobPost): JsonResponse
     {
-        $user = Auth::user();
-        if ($user->customer->id !== $jobPost->customer_id) {
-            return ApiResponse::unauthorized('This job post does not belong to this account.');
-        }
-
         return ApiResponse::success($jobPost, 'Job post retrieved successfully.');
     }
 
     public function update(JobPostRequest $request, JobPost $jobPost): JsonResponse
     {
-        $user = Auth::user();
-        if (!$user->customer || $user->customer->id !== $jobPost->customer_id) {
-            return ApiResponse::unauthorized('You are not authorized to update this job post.');
-        }
-
         $validatedData = $request->validated();
 
         $this->jobPostsService->updateJobPost($jobPost, $validatedData);
@@ -84,11 +66,6 @@ class JobPostController extends Controller
 
     public function destroy(JobPost $jobPost): JsonResponse
     {
-        $user = Auth::user();
-        if (!$user->customer || $user->customer->id !== $jobPost->customer_id) {
-            return ApiResponse::unauthorized('You are not authorized to delete this job post.');
-        }
-
         $this->jobPostsService->deleteJobPost($jobPost);
 
         return ApiResponse::success(null, 'Job post deleted successfully.');
