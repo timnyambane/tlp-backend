@@ -21,4 +21,13 @@ class Location extends Model
         'latitude',
         'northings',
     ];
+
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class);
+    }
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
+    }
 }
