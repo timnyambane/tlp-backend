@@ -9,9 +9,17 @@ use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Throwable;
+use App\Services\BusinessService;
 
 class JobPostService
 {
+    protected $businessService;
+
+    public function __construct(BusinessService $businessService)
+    {
+        $this->businessService = $businessService;
+    }
+
     public function indexJobs(Customer $customer, ?string $status = null): LengthAwarePaginator
     {
         $query = JobPost::where('customer_id', $customer->id)
@@ -47,9 +55,10 @@ class JobPostService
         });
     }
 
-
     public function createJobPost(?User $user, array $validatedData): JobPost
     {
+        $this->businessService->validateServices([$validatedData['service_id']], $validatedData['work_category_id']);
+
         $specificDate = ($validatedData['urgency'] === 'specificDate') ? $validatedData['specific_date'] : null;
 
         $data = [

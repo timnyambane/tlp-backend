@@ -23,11 +23,7 @@ class SendJobPostedMail
     {
         $jobPost = $event->jobPost;
 
-        Mail::to('admin@gmail.com')
-            ->send(new JobPostedMail($jobPost, 'mails.admin-job-posted'));
-        Mail::to($jobPost->customer->user->email)
-            ->send(new JobPostedMail($jobPost, 'mails.job-posted'));
-
-
+        Mail::to('admin@gmail.com')->send(new JobPostedMail($jobPost, 'mails.admin-job-posted'));
+        Mail::to($jobPost->customer->user->email)->send(new JobPostedMail($jobPost, 'mails.job-posted'));
     }
 }

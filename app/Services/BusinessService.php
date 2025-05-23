@@ -60,14 +60,14 @@ class BusinessService
         $business->services()->sync($serviceIds);
     }
 
-    private function validateServices($serviceIds, $workCategoryId)
+    public function validateServices($serviceIds, $workCategoryId)
     {
         $services = Service::whereIn('id', $serviceIds)
             ->where('work_category_id', $workCategoryId)
             ->get();
 
         if ($services->count() !== count($serviceIds)) {
-            throw new \Exception('Some selected services do not belong to the same work category.');
+            throw new \Exception('Some selected services do not belong to the same work category..');
         }
     }
 }

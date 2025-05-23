@@ -28,18 +28,13 @@ class JobPostController extends Controller
             return ApiResponse::error('Status parameter is required.');
         }
 
-        try {
-            $jobPosts = $this->jobPostsService->indexJobs($user->customer, $status);
-            return ApiResponse::success($jobPosts, 'Job posts retrieved successfully.');
-        } catch (\Exception $e) {
-            return ApiResponse::error($e->getMessage());
-        }
+        $jobPosts = $this->jobPostsService->indexJobs($user->customer, $status);
+        return ApiResponse::success($jobPosts, 'Job posts retrieved successfully.');
     }
 
     public function store(JobPostRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
-
         $user = Auth::user();
 
         try {

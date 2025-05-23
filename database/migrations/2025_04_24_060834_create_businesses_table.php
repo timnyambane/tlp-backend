@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('location_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('work_category_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('address')->nullable();
             $table->string('phone')->unique();
             $table->string('website')->nullable();
