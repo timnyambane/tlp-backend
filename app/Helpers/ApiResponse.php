@@ -2,7 +2,7 @@
 namespace App\Helpers;
 class ApiResponse
 {
-    public static function success($data = null, $message = 'Process complete', $code = 200)
+    public static function success($data = null, $message = 'Process completed', $code = 200)
     {
         return response()->json([
             'success' => true,
